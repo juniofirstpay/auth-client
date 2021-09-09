@@ -13,6 +13,8 @@ class OAuthService(object):
 
     base_url_get_user = '/api/user/info'
 
+    base_url_generate_token = '/oauth/token'
+
     def __init__(self, endpoint: str, client_id: str, client_secret: str):
         self.base_url = endpoint
         self.client_id = client_id
@@ -91,5 +93,27 @@ class OAuthService(object):
                 self.base_url_get_user
             ),
             headers=self.base_headers,
+        )
+        return self.process_response(response)
+
+    def generate_token(
+        self,
+        token: str,
+        token_type: str,
+        auth_key: str
+    ):
+        data = {
+            "token": token,
+            "token_type": token_type,
+            "auth_key": auth_key,
+        }
+        headers = self.base_headers
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_generate_token
+            ),
+            headers=self.base_headers,
+            json=data
         )
         return self.process_response(response)

@@ -57,3 +57,16 @@ class OAuthMicroClient(object):
             auth_token=auth_token
         )
         return response
+
+    def generate_token(
+        self,
+        token: str,
+        token_type: int,
+        auth_key: str,
+    ) -> Dict:
+        response = self.oauth_service.generate_token(
+            token=token,
+            token_type=token_type,
+            auth_key=auth_key
+        )
+        return response
