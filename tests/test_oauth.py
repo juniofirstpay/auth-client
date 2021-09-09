@@ -87,3 +87,16 @@ class TestOauth:
             assert not error
             assert response.get('username') is not None
             print(response.get('username'))
+
+    def test_check_user(self):
+        data_dict = {
+            "token": "1999000117",
+            "token_type": 1,
+            "device_id": "abcd"
+        }
+
+        with oauth_client.open() as client:
+            error, response = client.check_user(**data_dict)
+            assert not error
+            assert response.get('code') is not None
+            print(response.get('code'))

@@ -19,6 +19,8 @@ class OAuthService(object):
 
     base_url_find_user = '/api/user/find'
 
+    base_url_check_user = '/api/user/check'
+
     def __init__(self, endpoint: str, client_id: str, client_secret: str):
         self.base_url = endpoint
         self.client_id = client_id
@@ -210,6 +212,28 @@ class OAuthService(object):
             url=urljoin(
                 self.base_url,
                 self.base_url_find_user
+            ),
+            headers=self.base_headers,
+            json=data
+        )
+        return self.process_response(response)
+
+    def check_user(
+        self,
+        token: str,
+        token_type: int,
+        device_id: str
+    ):
+        data = {
+            "token": token,
+            "token_type": token_type,
+            "device_id": device_id,
+        }
+        headers = self.base_headers
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_check_user
             ),
             headers=self.base_headers,
             json=data

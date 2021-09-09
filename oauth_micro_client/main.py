@@ -109,3 +109,16 @@ class OAuthMicroClient(object):
             person_id=person_id
         )
         return response
+
+    def check_user(
+        self,
+        token: str,
+        token_type: int,
+        device_id: str,
+    ):
+        response = self.oauth_service.check_user(
+            token=token,
+            token_type=token_type,
+            device_id=device_id,
+        )
+        return response
