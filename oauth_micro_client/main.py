@@ -70,3 +70,22 @@ class OAuthMicroClient(object):
             auth_key=auth_key
         )
         return response
+
+    def update_user(
+        self,
+        token: str,
+        token_type: int,
+        username: str,
+        auth_key: Optional[str],
+        device_id: Optional[str],
+        person_id: Optional[str],
+    ) -> Dict:
+        response = self.oauth_service.update_user(
+            token=token,
+            token_type=token_type,
+            auth_key=auth_key,
+            username=username,
+            device_id=device_id,
+            person_id=person_id
+        )
+        return response

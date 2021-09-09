@@ -15,6 +15,8 @@ class OAuthService(object):
 
     base_url_generate_token = '/oauth/token'
 
+    base_url_update_user = '/api/user/update'
+
     def __init__(self, endpoint: str, client_id: str, client_secret: str):
         self.base_url = endpoint
         self.client_id = client_id
@@ -112,6 +114,34 @@ class OAuthService(object):
             url=urljoin(
                 self.base_url,
                 self.base_url_generate_token
+            ),
+            headers=self.base_headers,
+            json=data
+        )
+        return self.process_response(response)
+
+    def update_user(
+        self,
+        token: str,
+        token_type: int,
+        username: str,
+        auth_key: Optional[str],
+        device_id: Optional[str],
+        person_id: Optional[str],
+    ):
+        data = {
+            "token": token,
+            "token_type": token_type,
+            "auth_key": auth_key,
+            "username": username,
+            "person_id": person_id,
+            "device_id": device_id,
+        }
+        headers = self.base_headers
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_update_user
             ),
             headers=self.base_headers,
             json=data
