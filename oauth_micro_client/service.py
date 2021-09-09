@@ -11,6 +11,8 @@ class OAuthService(object):
 
     base_url_create_user = '/api/user/create'
 
+    base_url_get_user = '/api/user/info'
+
     def __init__(self, endpoint: str, client_id: str, client_secret: str):
         self.base_url = endpoint
         self.client_id = client_id
@@ -74,5 +76,20 @@ class OAuthService(object):
             ),
             headers=self.base_headers,
             json=data
+        )
+        return self.process_response(response)
+
+    def get_user(
+        self,
+        auth_token: str
+    ):
+        headers = self.base_headers
+        headers.update({"Authorization": f'Bearer {auth_token}'})
+        response = self.request.get(
+            url=urljoin(
+                self.base_url,
+                self.base_url_get_user
+            ),
+            headers=self.base_headers,
         )
         return self.process_response(response)

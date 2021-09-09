@@ -48,3 +48,12 @@ class OAuthMicroClient(object):
             device_id=device_id,
         )
         return response
+
+    def get_user(
+        self,
+        auth_token: str
+    ) -> Dict:
+        response = self.oauth_service.get_user(
+            auth_token=auth_token
+        )
+        return response

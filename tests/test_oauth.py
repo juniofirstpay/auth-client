@@ -24,3 +24,12 @@ class TestOauth:
             assert not error
             assert response.get('error') is not None
             print(response.get('error'))
+
+    def test_get_user(self):
+        auth_token = "BO0N33mx9YaxmsJo9NIabChaHjd8wOMiOvOY3rSQJG"
+
+        with oauth_client.open() as client:
+            error, response = client.get_user(auth_token=auth_token)
+            assert not error
+            assert response.get('username') is not None
+            print(response.get('username'))
