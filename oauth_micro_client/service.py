@@ -21,6 +21,8 @@ class OAuthService(object):
 
     base_url_check_user = '/api/user/check'
 
+    base_url_generate_otp = '/api/otp'
+
     def __init__(self, endpoint: str, client_id: str, client_secret: str):
         self.base_url = endpoint
         self.client_id = client_id
@@ -234,6 +236,26 @@ class OAuthService(object):
             url=urljoin(
                 self.base_url,
                 self.base_url_check_user
+            ),
+            headers=self.base_headers,
+            json=data
+        )
+        return self.process_response(response)
+
+    def generate_otp(
+        self,
+        mobile_num: str,
+        action: str
+    ):
+        data = {
+            "mobile_num": mobile_num,
+            "action": action
+        }
+        headers = self.base_headers
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_generate_otp
             ),
             headers=self.base_headers,
             json=data

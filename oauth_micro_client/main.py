@@ -122,3 +122,14 @@ class OAuthMicroClient(object):
             device_id=device_id,
         )
         return response
+
+    def generate_otp(
+        self,
+        mobile_num: str,
+        action: str
+    ):
+        response = self.oauth_service.generate_otp(
+            mobile_num=mobile_num,
+            action=action
+        )
+        return response

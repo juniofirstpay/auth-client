@@ -100,3 +100,15 @@ class TestOauth:
             assert not error
             assert response.get('code') is not None
             print(response.get('code'))
+
+    def test_generate_otp(self):
+        data_dict = {
+            "mobile_num": "1999000117",
+            "action": "generate"
+        }
+
+        with oauth_client.open() as client:
+            error, response = client.generate_otp(**data_dict)
+            assert not error
+            assert response.get('token') is not None
+            print(response.get('token'))
