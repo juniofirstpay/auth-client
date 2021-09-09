@@ -28,6 +28,23 @@ class OAuthMicroClient(object):
         self.oauth_service.close()
 
     # Makes a call to oauth micro service and issues account holder
-    def introspection(self, token: str) -> Dict:
-        response = self.oauth_service.introspection(token=token)
+    def introspection(self, auth_token: str) -> Dict:
+        response = self.oauth_service.introspection(auth_token=auth_token)
+        return response
+
+    def create_user(
+        self,
+        token: str,
+        token_type: int,
+        username: str,
+        auth_key: Optional[str],
+        device_id: Optional[str]
+    ) -> Dict:
+        response = self.oauth_service.create_user(
+            token=token,
+            token_type=token_type,
+            auth_key=auth_key,
+            username=username,
+            device_id=device_id,
+        )
         return response

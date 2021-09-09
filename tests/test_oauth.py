@@ -4,9 +4,23 @@ from oauth_micro_client import oauth_client
 class TestOauth:
 
     def test_introspection(self):
-        token = "BO0N33mx9YaxmsJo9NIabChaHjd8wOMiOvOY3rSQJG"
+        auth_token = "BO0N33mx9YaxmsJo9NIabChaHjd8wOMiOvOY3rSQJG"
         with oauth_client.open() as client:
-            error, response = client.introspection(token)
+            error, response = client.introspection(auth_token)
             assert not error
             assert response.get('username') is not None
             print(response.get('username'))
+
+    def test_create_user(self):
+        data_dict = {
+            "token": "1999000117",
+            "token_type": 1,
+            "auth_key": "1111",
+            "username": "F201C3C3-888F-4073-27AB-08D8EEE68536",
+            "device_id": "abcd"
+        }
+        with oauth_client.open() as client:
+            error, response = client.create_user(**data_dict)
+            assert not error
+            assert response.get('error') is not None
+            print(response.get('error'))

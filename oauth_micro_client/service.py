@@ -9,6 +9,8 @@ class OAuthService(object):
 
     base_url_introspect = '/oauth/introspect'
 
+    base_url_create_user = '/api/user/create'
+
     def __init__(self, endpoint: str, client_id: str, client_secret: str):
         self.base_url = endpoint
         self.client_id = client_id
@@ -36,14 +38,39 @@ class OAuthService(object):
             except:
                 return (response.status_code, response.text)
 
-    def introspection(self, token: str):
+    def introspection(self, auth_token: str):
         data = {
-            "authorization": token
+            "authorization": auth_token
         }
         response = self.request.post(
             url=urljoin(
                 self.base_url,
                 self.base_url_introspect
+            ),
+            headers=self.base_headers,
+            json=data
+        )
+        return self.process_response(response)
+
+    def create_user(
+        self,
+        token: str,
+        token_type: int,
+        username: str,
+        auth_key: Optional[str],
+        device_id: Optional[str]
+    ):
+        data = {
+            "token": token,
+            "token_type": token_type,
+            "auth_key": auth_key,
+            "username": username,
+            "device_id": device_id,
+        }
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_create_user
             ),
             headers=self.base_headers,
             json=data
