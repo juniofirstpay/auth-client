@@ -89,3 +89,23 @@ class OAuthMicroClient(object):
             person_id=person_id
         )
         return response
+
+    def find_user_by_token(
+        self,
+        token: str,
+        token_type: int
+    ):
+        response = self.oauth_service.find_user_by_token(
+            token=token,
+            token_type=token_type,
+        )
+        return response
+
+    def find_user_by_person_id(
+        self,
+        person_id: str,
+    ):
+        response = self.oauth_service.find_user_by_person_id(
+            person_id=person_id
+        )
+        return response

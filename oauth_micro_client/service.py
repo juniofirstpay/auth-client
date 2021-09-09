@@ -17,6 +17,8 @@ class OAuthService(object):
 
     base_url_update_user = '/api/user/update'
 
+    base_url_find_user = '/api/user/find'
+
     def __init__(self, endpoint: str, client_id: str, client_secret: str):
         self.base_url = endpoint
         self.client_id = client_id
@@ -142,6 +144,72 @@ class OAuthService(object):
             url=urljoin(
                 self.base_url,
                 self.base_url_update_user
+            ),
+            headers=self.base_headers,
+            json=data
+        )
+        return self.process_response(response)
+
+    def find_user_by_token(
+        self,
+        token: str,
+        token_type: int,
+        username: str,
+        auth_key: Optional[str],
+        device_id: Optional[str],
+        person_id: Optional[str],
+    ):
+        data = {
+            "token": token,
+            "token_type": token_type,
+            "auth_key": auth_key,
+            "username": username,
+            "person_id": person_id,
+            "device_id": device_id,
+        }
+        headers = self.base_headers
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_update_user
+            ),
+            headers=self.base_headers,
+            json=data
+        )
+        return self.process_response(response)
+
+    def find_user_by_token(
+        self,
+        token: str,
+        token_type: int
+    ):
+        data = {
+            "token": token,
+            "token_type": token_type
+        }
+        headers = self.base_headers
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_find_user
+            ),
+            headers=self.base_headers,
+            json=data
+        )
+        return self.process_response(response)
+
+    def find_user_by_person_id(
+        self,
+        person_id: str
+    ):
+        data = {
+            "person_id": person_id,
+        }
+        headers = self.base_headers
+        response = self.request.post(
+            url=urljoin(
+                self.base_url,
+                self.base_url_find_user
             ),
             headers=self.base_headers,
             json=data
