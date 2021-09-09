@@ -133,3 +133,18 @@ class OAuthMicroClient(object):
             action=action
         )
         return response
+
+    def verify_otp(
+        self,
+        mobile_num: str,
+        action: str,
+        token: str,
+        otp: str,
+    ):
+        response = self.oauth_service.verify_otp(
+            mobile_num=mobile_num,
+            action=action,
+            token=token,
+            otp=otp,
+        )
+        return response

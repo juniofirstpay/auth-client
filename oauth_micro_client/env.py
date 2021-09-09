@@ -6,7 +6,6 @@ __variant = None
 __config = None
 try:
     env = load(open('config.yaml'), Loader=loader)
-    print(env)
     __config = env.get('service')
     __variant= env.get('variant')
 

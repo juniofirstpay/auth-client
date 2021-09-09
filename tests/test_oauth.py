@@ -112,3 +112,17 @@ class TestOauth:
             assert not error
             assert response.get('token') is not None
             print(response.get('token'))
+
+    def test_verify_otp(self):
+        data_dict = {
+            "mobile_num": "1999000117",
+            "token": "719356013a43023d17eee1115be5429f",
+            "otp": "5699",
+            "action": "validate"
+        }
+
+        with oauth_client.open() as client:
+            error, response = client.verify_otp(**data_dict)
+            assert error
+            assert response.get('Success') is not None
+            print(response.get('Success'))
