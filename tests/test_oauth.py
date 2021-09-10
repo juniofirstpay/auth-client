@@ -1,12 +1,14 @@
 import pytest
-from oauth_micro_client import oauth_client
+
+from oauth_micro_client import OAuthClient
 
 class TestOauth:
+    oauth_client = OAuthClient()
 
     def test_introspection(self):
         auth_token = "BO0N33mx9YaxmsJo9NIabChaHjd8wOMiOvOY3rSQJG"
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.introspection(auth_token)
             assert not error
             assert response.get('username') is not None
@@ -21,7 +23,7 @@ class TestOauth:
             "device_id": "abcd"
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.create_user(**data_dict)
             assert not error
             assert response.get('error') is not None
@@ -30,7 +32,7 @@ class TestOauth:
     def test_get_user(self):
         auth_token = "BO0N33mx9YaxmsJo9NIabChaHjd8wOMiOvOY3rSQJG"
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.get_user(auth_token=auth_token)
             assert not error
             assert response.get('username') is not None
@@ -43,7 +45,7 @@ class TestOauth:
             "auth_key": "1111"
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.generate_token(**data_dict)
             assert not error
             assert response.get('access_token') is not None
@@ -59,7 +61,7 @@ class TestOauth:
             "person_id": "person1"
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.update_user(**data_dict)
             assert not error
             assert response.get('access_token') is not None
@@ -71,7 +73,7 @@ class TestOauth:
             "token_type": 1,
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.find_user_by_token(**data_dict)
             assert not error
             assert response.get('username') is not None
@@ -82,7 +84,7 @@ class TestOauth:
             "person_id": "person1"
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.find_user_by_person_id(**data_dict)
             assert not error
             assert response.get('username') is not None
@@ -95,7 +97,7 @@ class TestOauth:
             "device_id": "abcd"
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.check_user(**data_dict)
             assert not error
             assert response.get('code') is not None
@@ -107,7 +109,7 @@ class TestOauth:
             "action": "generate"
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.generate_otp(**data_dict)
             assert not error
             assert response.get('token') is not None
@@ -121,7 +123,7 @@ class TestOauth:
             "action": "validate"
         }
 
-        with oauth_client.open() as client:
+        with self.oauth_client.open() as client:
             error, response = client.verify_otp(**data_dict)
             assert error
             assert response.get('Success') is not None
