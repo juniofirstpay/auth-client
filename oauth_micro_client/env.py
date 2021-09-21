@@ -15,10 +15,10 @@ try:
     if __config.get('endpoint') is None:
         warn("oAuth Client Enpoint Not Configured")
 
-    if __config.get('clientid') is None:
+    if __config.get('client_id') is None:
         warn("oAuth Client Id Configured")
 
-    if __config.get('clientsecret') is None:
+    if __config.get('client_secret') is None:
         warn("oAuth Client Secret Configured")
 
     if __variant is None:

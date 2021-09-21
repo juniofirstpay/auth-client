@@ -8,35 +8,24 @@ from requests.models import Response
 class OAuthService(object):
 
     base_url_introspect = '/oauth/introspect'
-
     base_url_create_user = '/api/user/create'
-
     base_url_get_user = '/api/user/info'
-
     base_url_generate_token = '/oauth/token'
-
     base_url_update_user = '/api/user/update'
-
     base_url_find_user = '/api/user/find'
-
     base_url_check_user = '/api/user/check'
-
-    base_url_generate_otp = '/api/otp'
-
+    base_url_otp = '/api/otp'
     base_url_verify_otp = '/api/otp'
+    base_url_register = '/api/user/register'
 
-    def __init__(self, endpoint: str, client_id: str, client_secret: str):
+    def __init__(self, endpoint: str, api_key):
         self.base_url = endpoint
-        self.client_id = client_id
-        self.client_secret = client_secret
         self.base_headers = {
-            'Client': self.client_id,
-            'Secret': self.client_secret,
+            "Authorization": f"Bearer {api_key}"
         }
 
     def open(self):
         self.request = requests.Session()
-        self.request.headers.update(self.base_headers)
         return self
 
     def close(self):
@@ -52,17 +41,37 @@ class OAuthService(object):
             except:
                 return (response.status_code, response.text)
 
-    def introspection(self, auth_token: str):
-        data = {
-            "authorization": auth_token
-        }
+    def authorize(self, *args, **kwargs):
+        response = self.request.post(
+            url=urljoin(self.base_url,
+                        self.base_url_generate_token),
+            json=kwargs
+        )
+        return self.process_response(response)
+
+    def register(self, *args, **kwargs):
+        response = self.request.post(
+            url=urljoin(self.base_url,
+                        self.base_url_register),
+            json=kwargs
+        )
+        return self.process_response(response)
+
+    def otp(self, *args, **kwargs):
+        response = self.request.post(
+            url=urljoin(self.base_url,
+                        self.base_url_otp),
+            json=kwargs
+        )
+        return self.process_response(response)
+
+    def introspection(self, *args, **kwargs):
         response = self.request.post(
             url=urljoin(
                 self.base_url,
                 self.base_url_introspect
             ),
-            headers=self.base_headers,
-            json=data
+            json=kwargs
         )
         return self.process_response(response)
 
@@ -70,17 +79,22 @@ class OAuthService(object):
         self,
         token: str,
         token_type: int,
-        username: str,
-        auth_key: Optional[str],
-        device_id: Optional[str]
+        username: Optional[str] = None,
+        auth_key: Optional[str] = None,
+        device_id: Optional[str] = None
     ):
         data = {
             "token": token,
             "token_type": token_type,
-            "auth_key": auth_key,
-            "username": username,
             "device_id": device_id,
         }
+        if username:
+            data["username"] = username
+        if auth_key:
+            data["auth_key"] = auth_key
+        if device_id:
+            data["device_id"] = device_id
+
         response = self.request.post(
             url=urljoin(
                 self.base_url,
@@ -95,14 +109,14 @@ class OAuthService(object):
         self,
         auth_token: str
     ):
-        headers = self.base_headers
+        headers = {}
         headers.update({"Authorization": f'Bearer {auth_token}'})
         response = self.request.get(
             url=urljoin(
                 self.base_url,
                 self.base_url_get_user
             ),
-            headers=self.base_headers,
+            headers=headers,
         )
         return self.process_response(response)
 
@@ -225,15 +239,12 @@ class OAuthService(object):
     def check_user(
         self,
         token: str,
-        token_type: int,
         device_id: str
     ):
         data = {
             "token": token,
-            "token_type": token_type,
             "device_id": device_id,
         }
-        headers = self.base_headers
         response = self.request.post(
             url=urljoin(
                 self.base_url,
@@ -287,3 +298,14 @@ class OAuthService(object):
             json=data
         )
         return self.process_response(response)
+
+    def add_user(
+        self,
+        **kwargs
+    ):
+        headers = self.base_headers
+        self.request.post(
+            url=urljoin(self.base_url, self.base_url_add_user),
+            headers=self.base_headers,
+            json=data
+        )

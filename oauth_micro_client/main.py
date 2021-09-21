@@ -28,15 +28,124 @@ class OAuthMicroClient(object):
         self.oauth_service.close()
 
     # Makes a call to oauth micro service and issues account holder
-    def introspection(self, auth_token: str) -> Dict:
-        response = self.oauth_service.introspection(auth_token=auth_token)
+    def introspection(
+            self,
+            client_id: str,
+            client_secret: str,
+            auth_token: str,
+            auth_token_type: str) -> Dict:
+        response = self.oauth_service.introspection(
+            client_id=client_id,
+            client_secret=client_secret,
+            token=auth_token,
+            token_type_hint=auth_token_type
+        )
         return response
+
+    def generate_otp(
+        self,
+        client_id: str,
+        client_secret: str,
+        mobile_number: str
+    ):
+        response = self.oauth_service.otp(
+            client_id=client_id,
+            client_secret=client_secret,
+            mobile_number=mobile_number,
+            action="generate",
+            send_sms=True
+        )
+        return response
+
+    def verify_otp(
+        self,
+        client_id: str,
+        client_secret: str,
+        mobile_number: str,
+        otp_token: str,
+        otp: str,
+    ):
+        response = self.oauth_service.otp(
+            client_id=client_id,
+            client_secret=client_secret,
+            mobile_number=mobile_number,
+            action="validate",
+            otp_token=otp_token,
+            otp=otp,
+            send_sms=False
+        )
+        return response
+
+    def authorize(
+        self,
+        client_id: str,
+        client_secret: str,
+        grant_type: str,
+        scope: str,
+        token: str,
+        token_type: int,
+        auth_key: str,
+    ):
+        return self.oauth_service.authorize(
+            client_id=client_id,
+            client_secret=client_secret,
+            grant_type=grant_type,
+            scope=scope,
+            username=token,
+            password=auth_key
+        )
+
+    def register(
+        self,
+        client_id: str,
+        client_secret: str,
+        device_id: str,
+        token: str,
+        token_type: int,
+        auth_key: str,
+        otp: str,
+        otp_token: str
+    ):
+        return self.oauth_service.register(
+            client_id=client_id,
+            client_secret=client_secret,
+            token=token,
+            token_type=token_type,
+            auth_key=auth_key,
+            device_id=device_id,
+            otp=otp,
+            otp_token=otp_token,
+            forgot_mpin=False
+        )
+
+    def reset_auth_key(
+        self,
+        client_id: str,
+        client_secret: str,
+        device_id: str,
+        token: str,
+        token_type: int,
+        auth_key: str,
+        otp: str,
+        otp_token: str
+    ):
+        return self.oauth_service.register(
+            client_id=client_id,
+            client_secret=client_secret,
+            token=token,
+            token_type=token_type,
+            auth_key=auth_key,
+            device_id=device_id,
+            otp=otp,
+            otp_token=otp_token,
+            forgot_mpin=True
+        )
 
     def create_user(
         self,
         token: str,
         token_type: int,
-        username: str,
+        username: Optional[str],
         auth_key: Optional[str],
         device_id: Optional[str]
     ) -> Dict:
@@ -55,19 +164,6 @@ class OAuthMicroClient(object):
     ) -> Dict:
         response = self.oauth_service.get_user(
             auth_token=auth_token
-        )
-        return response
-
-    def generate_token(
-        self,
-        token: str,
-        token_type: int,
-        auth_key: str,
-    ) -> Dict:
-        response = self.oauth_service.generate_token(
-            token=token,
-            token_type=token_type,
-            auth_key=auth_key
         )
         return response
 
@@ -113,38 +209,10 @@ class OAuthMicroClient(object):
     def check_user(
         self,
         token: str,
-        token_type: int,
         device_id: str,
     ):
         response = self.oauth_service.check_user(
             token=token,
-            token_type=token_type,
             device_id=device_id,
-        )
-        return response
-
-    def generate_otp(
-        self,
-        mobile_num: str,
-        action: str
-    ):
-        response = self.oauth_service.generate_otp(
-            mobile_num=mobile_num,
-            action=action
-        )
-        return response
-
-    def verify_otp(
-        self,
-        mobile_num: str,
-        action: str,
-        token: str,
-        otp: str,
-    ):
-        response = self.oauth_service.verify_otp(
-            mobile_num=mobile_num,
-            action=action,
-            token=token,
-            otp=otp,
         )
         return response
