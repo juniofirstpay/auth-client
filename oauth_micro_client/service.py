@@ -18,8 +18,10 @@ class OAuthService(object):
     base_url_verify_otp = '/api/otp'
     base_url_register = '/api/user/register'
 
-    def __init__(self, endpoint: str, api_key):
+    def __init__(self, endpoint: str, client_id: str, client_secret: str, api_key):
         self.base_url = endpoint
+        self.client_id = client_id
+        self.client_secret = client_secret
         self.base_headers = {
             "Authorization": f"Bearer {api_key}"
         }
@@ -66,12 +68,14 @@ class OAuthService(object):
         return self.process_response(response)
 
     def introspection(self, *args, **kwargs):
+
         response = self.request.post(
             url=urljoin(
                 self.base_url,
                 self.base_url_introspect
             ),
-            json=kwargs
+            json={**kwargs, "client_id": self.client_id,
+                  "client_secret": self.client_secret}
         )
         return self.process_response(response)
 
