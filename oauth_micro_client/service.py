@@ -14,7 +14,7 @@ class OAuthService(object):
     base_url_update_user = '/api/user/update'
     base_url_find_user = '/api/user/find'
     base_url_check_user = '/api/user/check'
-    base_url_otp = '/oauth/otp/'
+    base_url_otp = '/oauth/otp'
     base_url_verify_otp = '/oauth/otp'
     base_url_register = '/api/user/register'
 
