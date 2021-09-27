@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='oauth-micro-client',
     packages=['oauth_micro_client'],
-    version='0.1.4',
+    version='0.1.5',
     author="Develper Junio",
     author_email='developer@junio.in',
     classifiers=[
