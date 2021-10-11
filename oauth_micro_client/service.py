@@ -89,8 +89,7 @@ class OAuthService(object):
     ):
         data = {
             "token": token,
-            "token_type": token_type,
-            "device_id": device_id,
+            "token_type": token_type
         }
         if username:
             data["username"] = username
