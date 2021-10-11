@@ -173,33 +173,33 @@ class OAuthService(object):
         )
         return self.process_response(response)
 
-    def find_user_by_token(
-        self,
-        token: str,
-        token_type: int,
-        username: str,
-        auth_key: Optional[str],
-        device_id: Optional[str],
-        person_id: Optional[str],
-    ):
-        data = {
-            "token": token,
-            "token_type": token_type,
-            "auth_key": auth_key,
-            "username": username,
-            "person_id": person_id,
-            "device_id": device_id,
-        }
-        headers = self.base_headers
-        response = self.request.post(
-            url=urljoin(
-                self.base_url,
-                self.base_url_update_user
-            ),
-            headers=self.base_headers,
-            json=data
-        )
-        return self.process_response(response)
+    # def find_user_by_token(
+    #     self,
+    #     token: str,
+    #     token_type: int,
+    #     username: str,
+    #     auth_key: Optional[str],
+    #     device_id: Optional[str],
+    #     person_id: Optional[str],
+    # ):
+    #     data = {
+    #         "token": token,
+    #         "token_type": token_type,
+    #         "auth_key": auth_key,
+    #         "username": username,
+    #         "person_id": person_id,
+    #         "device_id": device_id,
+    #     }
+    #     headers = self.base_headers
+    #     response = self.request.post(
+    #         url=urljoin(
+    #             self.base_url,
+    #             self.base_url_update_user
+    #         ),
+    #         headers=self.base_headers,
+    #         json=data
+    #     )
+    #     return self.process_response(response)
 
     def find_user_by_token(
         self,
@@ -207,8 +207,8 @@ class OAuthService(object):
         token_type: int
     ):
         data = {
-            "token": token,
-            "token_type": token_type
+            "value": token,
+            "type": token_type
         }
         headers = self.base_headers
         response = self.request.post(
