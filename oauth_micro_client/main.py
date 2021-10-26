@@ -105,7 +105,8 @@ class OAuthMicroClient(object):
         auth_key: str,
         otp: str,
         otp_token: str,
-        forgot_mpin=False
+        forgot_mpin=False,
+        migration_status=1
     ):
         return self.oauth_service.register(
             client_id=client_id,
@@ -116,7 +117,8 @@ class OAuthMicroClient(object):
             device_id=device_id,
             otp=otp,
             otp_token=otp_token,
-            forgot_mpin=forgot_mpin
+            forgot_mpin=forgot_mpin,
+            migration_status=migration_status
         )
 
     def reset_auth_key(
