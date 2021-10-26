@@ -150,7 +150,8 @@ class OAuthMicroClient(object):
         token_type: int,
         username: Optional[str],
         auth_key: Optional[str],
-        device_id: Optional[str]
+        device_id: Optional[str],
+        migration_status: Optional[int]
     ) -> Dict:
         response = self.oauth_service.create_user(
             token=token,
@@ -158,6 +159,7 @@ class OAuthMicroClient(object):
             auth_key=auth_key,
             username=username,
             device_id=device_id,
+            migration_status=migration_status
         )
         return response
 

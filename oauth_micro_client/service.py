@@ -85,7 +85,8 @@ class OAuthService(object):
         token_type: int,
         username: Optional[str] = None,
         auth_key: Optional[str] = None,
-        device_id: Optional[str] = None
+        device_id: Optional[str] = None,
+        migration_status: Optional[int] = 2
     ):
         data = {
             "token": token,
@@ -97,6 +98,9 @@ class OAuthService(object):
             data["auth_key"] = auth_key
         if device_id:
             data["device_id"] = device_id
+
+        if migration_status:
+            data["migration_status"] = 2
 
         response = self.request.post(
             url=urljoin(
