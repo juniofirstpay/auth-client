@@ -108,7 +108,7 @@ class OAuthService(object):
             data["device_id"] = device_id
 
         if migration_status:
-            data["migration_status"] = 2
+            data["migration_status"] = migration_status
 
         response = self.request.post(
             url=urljoin(
