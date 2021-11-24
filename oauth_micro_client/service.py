@@ -50,6 +50,14 @@ class OAuthService(object):
             json=kwargs
         )
         return self.process_response(response)
+       
+    def authorize_via_otp(self, *args, **kwargs):
+        response = self.request.post(
+            url=urljoin(self.base_url,
+                        self.base_url_generate_token),
+            json=kwargs
+        )
+        return self.process_response(response)
 
     def register(self, *args, **kwargs):
         response = self.request.post(
