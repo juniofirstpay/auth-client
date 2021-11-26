@@ -105,7 +105,7 @@ class OAuthMicroClient(object):
         otp: int,
         otp_token: str,
     ):
-        return self.oauth_service.authorize(
+        return self.oauth_service.authorize_via_otp(
             client_id=client_id,
             client_secret=client_secret,
             grant_type=grant_type,
