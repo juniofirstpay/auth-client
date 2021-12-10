@@ -85,6 +85,7 @@ class OAuthMicroClient(object):
         token: str,
         token_type: int,
         auth_key: str,
+        device_id: str=None
     ):
         return self.oauth_service.authorize(
             client_id=client_id,
@@ -92,7 +93,8 @@ class OAuthMicroClient(object):
             grant_type=grant_type,
             scope=scope,
             username=token,
-            password=auth_key
+            password=auth_key,
+            device_id=device_id
         )
 
     def register(
