@@ -96,6 +96,26 @@ class OAuthMicroClient(object):
             password=auth_key,
             device_id=device_id
         )
+    
+    def authorize_via_otp(
+        self,
+        client_id: str,
+        client_secret: str,
+        grant_type: str,
+        scope: str,
+        username: str,
+        otp: int,
+        otp_token: str,
+    ):
+        return self.oauth_service.authorize_via_otp(
+            client_id=client_id,
+            client_secret=client_secret,
+            grant_type=grant_type,
+            scope=scope,
+            username=username,
+            otp=otp,
+            otp_token=otp_token
+        )
 
     def register(
         self,
