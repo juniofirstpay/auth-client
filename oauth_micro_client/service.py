@@ -7,16 +7,16 @@ from requests.models import Response
 
 class OAuthService(object):
 
-    base_url_introspect = '/oauth/introspect'
-    base_url_create_user = '/api/user/create'
-    base_url_get_user = '/api/user/info'
-    base_url_generate_token = '/oauth/token'
-    base_url_update_user = '/api/user/update'
-    base_url_find_user = '/api/user/find'
-    base_url_check_user = '/api/user/check'
-    base_url_otp = '/oauth/otp'
-    base_url_verify_otp = '/oauth/otp'
-    base_url_register = '/api/user/register'
+    base_url_introspect = 'oauth/introspect'
+    base_url_create_user = 'api/user/create'
+    base_url_get_user = 'api/user/info'
+    base_url_generate_token = 'oauth/token'
+    base_url_update_user = 'api/user/update'
+    base_url_find_user = 'api/user/find'
+    base_url_check_user = 'api/user/check'
+    base_url_otp = 'oauth/otp'
+    base_url_verify_otp = 'oauth/otp'
+    base_url_register = 'api/user/register'
 
     def __init__(self, endpoint: str, client_id: str, client_secret: str, api_key):
         self.base_url = endpoint
