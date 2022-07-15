@@ -47,7 +47,8 @@ class OAuthMicroClient(object):
         client_id: str,
         client_secret: str,
         mobile_number: str,
-        scope:str = None
+        scope:str = None,
+        vendor:str =None
     ):
         response = self.oauth_service.otp(
             client_id=client_id,
@@ -55,7 +56,8 @@ class OAuthMicroClient(object):
             mobile_number=mobile_number,
             action="generate",
             send_sms=True,
-            scope=scope
+            scope=scope,
+            vendor=vendor
         )
         return response
 
