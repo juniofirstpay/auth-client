@@ -46,14 +46,16 @@ class OAuthMicroClient(object):
         self,
         client_id: str,
         client_secret: str,
-        mobile_number: str
+        mobile_number: str,
+        scope:str = None
     ):
         response = self.oauth_service.otp(
             client_id=client_id,
             client_secret=client_secret,
             mobile_number=mobile_number,
             action="generate",
-            send_sms=True
+            send_sms=True,
+            scope=scope
         )
         return response
 
@@ -64,6 +66,7 @@ class OAuthMicroClient(object):
         mobile_number: str,
         otp_token: str,
         otp: str,
+        scope: str = None
     ):
         response = self.oauth_service.otp(
             client_id=client_id,
@@ -72,8 +75,28 @@ class OAuthMicroClient(object):
             action="validate",
             otp_token=otp_token,
             otp=otp,
-            send_sms=False
+            send_sms=False,
+            scope = scope
         )
+        return response
+
+    def validate_scope(
+        self, 
+        client_id: str,
+        client_secret: str,
+        mobile_number: str,
+        scope:str,
+        access_token:str
+    ):
+
+        response = self.oauth_service.validate_access(
+            client_id=client_id,
+            client_secret=client_secret,
+            mobile_number=mobile_number,
+            scope = scope,
+            access_token=access_token
+        )
+
         return response
 
     def authorize(
