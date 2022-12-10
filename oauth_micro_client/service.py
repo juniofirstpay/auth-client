@@ -17,6 +17,7 @@ class OAuthService(object):
     base_url_otp = 'oauth/otp'
     base_url_verify_otp = 'oauth/otp'
     base_url_register = 'api/user/register'
+    base_url_access_verify = 'api/otp/access'
 
     def __init__(self, endpoint: str, client_id: str, client_secret: str, api_key):
         self.base_url = endpoint
@@ -71,6 +72,14 @@ class OAuthService(object):
         response = self.request.post(
             url=urljoin(self.base_url,
                         self.base_url_otp),
+            json=kwargs
+        )
+        return self.process_response(response)
+
+    def validate_access(self, *args , **kwargs):
+        response = self.request.post(
+            url=urljoin(self.base_url,
+                        self.base_url_access_verify),
             json=kwargs
         )
         return self.process_response(response)
@@ -273,11 +282,13 @@ class OAuthService(object):
     def generate_otp(
         self,
         mobile_num: str,
-        action: str
+        action: str,
+        scope : str = None
     ):
         data = {
             "mobile_num": mobile_num,
-            "action": action
+            "action": action, 
+            "scope" : scope
         }
         headers = self.base_headers
         response = self.request.post(
@@ -295,13 +306,15 @@ class OAuthService(object):
         mobile_num: str,
         action: str,
         token: str,
-        otp: str
+        otp: str,
+        scope: str = None
     ):
         data = {
             "mobile_num": mobile_num,
             "action": action,
             "token": token,
             "otp": otp,
+            "scope" : scope
         }
         headers = self.base_headers
         response = self.request.post(
