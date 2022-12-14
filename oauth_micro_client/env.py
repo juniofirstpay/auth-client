@@ -32,7 +32,7 @@ def setup(env):
     global __config
     global __variant
     try:
-        env = load(open('config.yaml'), Loader=loader)
+        # env = load(open('config.yaml'), Loader=loader)
         __config = env.get('oauth', {}).get('service')
         __variant = env.get('oauth', {}).get('variant')
 
