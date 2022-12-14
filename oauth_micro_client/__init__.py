@@ -1,14 +1,15 @@
 from .main import OAuthMicroClient
 from .service import OAuthService
-from .env import __config
+from .env import get_config
 
 
 def OAuthClient():
+    config = get_config()
     oauth_service = OAuthService(
-        __config.get('endpoint'),
-        __config.get('client_id'),
-        __config.get('client_secret'),
-        __config.get('api_key')
+        config.get('endpoint'),
+        config.get('client_id'),
+        config.get('client_secret'),
+        config.get('api_key')
     )
     oauth_client = OAuthMicroClient(oauth_service)
     return oauth_client
