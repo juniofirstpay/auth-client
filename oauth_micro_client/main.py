@@ -83,17 +83,13 @@ class OAuthMicroClient(object):
         return response
 
     def validate_scope(
-        self, 
-        client_id: str,
-        client_secret: str,
+        self,
         mobile_number: str,
         scope:str,
         access_token:str
     ):
 
         response = self.oauth_service.validate_access(
-            client_id=client_id,
-            client_secret=client_secret,
             mobile_number=mobile_number,
             scope = scope,
             access_token=access_token

@@ -80,7 +80,8 @@ class OAuthService(object):
         response = self.request.post(
             url=urljoin(self.base_url,
                         self.base_url_access_verify),
-            json=kwargs
+            json={**kwargs, "client_id": self.client_id,
+                  "client_secret": self.client_secret}
         )
         return self.process_response(response)
 
