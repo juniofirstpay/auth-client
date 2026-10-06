@@ -33,6 +33,6 @@ setup(
         "PyYAML==5.4.1",
         "requests==2.26.0",
         "toml==0.10.2",
-        "urllib3==1.26.6"
+        "urllib3==2.8.0"
     ]
 )
